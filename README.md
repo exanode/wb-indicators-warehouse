@@ -6,6 +6,8 @@ Warehouse for World Bank development indicators: 60+ years, 200+ countries, 10 i
 
 ## Architecture
 
+<img src="architecture.svg" width="1200">
+
 ```
 World Bank REST API  (api.worldbank.org/v2)
   |  paginated per indicator, checkpoint/retry on failures
