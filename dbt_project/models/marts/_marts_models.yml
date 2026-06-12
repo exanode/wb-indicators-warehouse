@@ -1,9 +1,9 @@
-version: 2
+ï»¿version: 2
 
 models:
   - name: fct_indicator_values
     description: >
-      Kimball fact table. Grain: country Ã- indicator Ã- year.
+      Kimball fact table. Grain: country x indicator x year.
       Values represent annual World Bank development indicators.
     columns:
       - name: fact_key

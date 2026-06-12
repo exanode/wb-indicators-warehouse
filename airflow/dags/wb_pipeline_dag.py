@@ -1,4 +1,4 @@
-"""
+﻿"""
 World Bank Indicators Pipeline DAG
 
 Runs daily at 06:00 UTC. WB data is annual but corrections appear throughout the year,
@@ -59,7 +59,7 @@ default_args = {
 
 with DAG(
     dag_id="wb_indicators_pipeline",
-    description="Daily World Bank indicator ingest → Snowflake → dbt",
+    description="Daily World Bank indicator ingest -> Snowflake -> dbt",
     schedule_interval="0 6 * * *",
     start_date=datetime(2024, 1, 1),
     catchup=True,

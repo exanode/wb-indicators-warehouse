@@ -1,6 +1,6 @@
-# wb-indicators-warehouse
+﻿# wb-indicators-warehouse
 
-Warehouse for World Bank development indicators: 60+ years, 200+ countries, 10 indicators. Paginated REST API ingest → S3 Parquet → Snowflake → dbt Kimball star schema.
+Warehouse for World Bank development indicators: 60+ years, 200+ countries, 10 indicators. Paginated REST API ingest -> S3 Parquet -> Snowflake -> dbt Kimball star schema.
 
 ---
 
@@ -8,12 +8,12 @@ Warehouse for World Bank development indicators: 60+ years, 200+ countries, 10 i
 
 ```
 World Bank REST API  (api.worldbank.org/v2)
-  ↓  paginated per indicator, checkpoint/retry on failures
+  |  paginated per indicator, checkpoint/retry on failures
 S3 raw/wb/indicators/run_date=YYYY-MM-DD/indicator=NY_GDP_MKTP_CD/data.parquet
-  ↓  COPY INTO
+  |  COPY INTO
 Snowflake RAW schema
-  ↓  dbt
-Snowflake MARTS.fct_indicator_values  (grain: country �- indicator �- year)
+  |  dbt
+Snowflake MARTS.fct_indicator_values  (grain: country x indicator x year)
 Snowflake MARTS.dim_country
 Snowflake MARTS.dim_indicator
 Snowflake SNAPSHOTS.scd_dim_country   (SCD2, tracks income level reclassifications)
@@ -23,7 +23,7 @@ Snowflake SNAPSHOTS.scd_dim_country   (SCD2, tracks income level reclassificatio
 
 ## Star schema
 
-**Fact grain**: `country_iso2 �- indicator_code �- year`  
+**Fact grain**: `country_iso2 x indicator_code x year`  
 ~1M+ rows for default indicator set across 60+ years.
 
 **dim_country** is SCD2 via `dbt snapshot`. Countries do get reclassified (China moved from lower-middle to upper-middle income in 2010). The snapshot preserves that history.
@@ -81,20 +81,20 @@ pytest tests/ -v
 
 ```
 wb-indicators-warehouse/
-├── ingestion/
-│   ├── config.py      env-based config, default indicator list
-│   ├── checkpoint.py  indicator-level ingest state
-│   ├── fetch.py       paginated WB API with tenacity retry
-│   ├── writer.py      PyArrow schema → S3 Parquet
-│   ├── logger.py      structured JSON logging
-│   └── main.py        CLI entrypoint
-├── dbt_project/
-│   ├── models/staging/
-│   ├── models/intermediate/
-│   ├── models/marts/
-│   ├── snapshots/
-│   └── macros/
-├── airflow/dags/
-├── tests/
-└── sample_data/
+|-- ingestion/
+|   |-- config.py      env-based config, default indicator list
+|   |-- checkpoint.py  indicator-level ingest state
+|   |-- fetch.py       paginated WB API with tenacity retry
+|   |-- writer.py      PyArrow schema -> S3 Parquet
+|   |-- logger.py      structured JSON logging
+|   `-- main.py        CLI entrypoint
+|-- dbt_project/
+|   |-- models/staging/
+|   |-- models/intermediate/
+|   |-- models/marts/
+|   |-- snapshots/
+|   `-- macros/
+|-- airflow/dags/
+|-- tests/
+`-- sample_data/
 ```

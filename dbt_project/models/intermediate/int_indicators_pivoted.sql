@@ -1,6 +1,6 @@
--- intermediate/int_indicators_pivoted.sql
+ï»¿-- intermediate/int_indicators_pivoted.sql
 -- Join indicator values with country dimension.
--- Enforces the expected grain: country Ã- indicator Ã- year.
+-- Enforces the expected grain: country x indicator x year.
 
 with indicators as (
     select * from {{ ref('stg_wb_indicators') }}

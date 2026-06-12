@@ -1,5 +1,5 @@
--- marts/fct_indicator_values.sql
--- Fact table at grain: country Ã- indicator Ã- year.
+ï»¿-- marts/fct_indicator_values.sql
+-- Fact table at grain: country x indicator x year.
 -- Surrogate keys reference dim_country and dim_indicator.
 -- Incremental on year to allow historical backfill without full rebuilds.
 
