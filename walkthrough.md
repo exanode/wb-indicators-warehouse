@@ -1,5 +1,4 @@
-﻿# World Bank Indicators Warehouse - Interview Guide
-
+﻿# World Bank Indicators Warehouse
 > **Diagram:** see `architecture.svg` in this folder (opens in any browser).
 
 ---
