@@ -1,0 +1,171 @@
+<svg viewBox="0 0 1200 810" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, -apple-system, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowPink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#be185d"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6d28d9"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <filter id="softshadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="810" fill="#f8fafc"/>
+
+  <!-- Header -->
+  <text x="40" y="52" font-size="27" font-weight="700" fill="#0f172a">World Bank Indicators Warehouse - Architecture</text>
+  <text x="40" y="79" font-size="14" fill="#64748b">Python · S3 · Snowflake · dbt · Airflow · Kimball&#160;&#160;·&#160;&#160;60+ years · 200+ countries&#160;&#160;·&#160;&#160;star schema, grain: country × indicator × year</text>
+
+  <!-- ============ Left pipeline column ============ -->
+  <!-- Source -->
+  <rect x="40" y="104" width="390" height="90" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="60" y="134" font-size="16" font-weight="700" fill="#92400e">World Bank REST API</text>
+  <text x="60" y="157" font-size="12.5" fill="#78350f">api.worldbank.org/v2 · paginated per indicator</text>
+  <text x="60" y="176" font-size="12.5" fill="#78350f">10 default indicators</text>
+
+  <path d="M 230 194 L 230 226" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="244" y="207" font-size="11.5" fill="#64748b">tenacity retries</text>
+  <text x="244" y="222" font-size="11.5" fill="#64748b">indicator-level checkpoint</text>
+
+  <!-- Ingestion -->
+  <rect x="40" y="230" width="390" height="142" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="60" y="260" font-size="16" font-weight="700" fill="#1e40af">Python Ingestion Layer</text>
+  <text x="60" y="285" font-size="12.5" fill="#334155">fetch.py - paginated WB API + tenacity retry</text>
+  <text x="60" y="305" font-size="12.5" fill="#334155">checkpoint.py - indicator-level ingest state</text>
+  <text x="60" y="325" font-size="12.5" fill="#334155">writer.py - explicit PyArrow schema → S3 Parquet</text>
+  <text x="60" y="345" font-size="12.5" fill="#334155">logger.py - structured JSON logging · main.py - CLI</text>
+
+  <path d="M 230 372 L 230 404" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- S3 -->
+  <rect x="40" y="408" width="390" height="112" rx="12" fill="#d1fae5" stroke="#10b981" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="60" y="436" font-size="16" font-weight="700" fill="#065f46">AWS S3 - date-partitioned Parquet</text>
+  <text x="60" y="462" font-size="11.5" fill="#064e3b" font-family="Consolas, Menlo, monospace">raw/wb/indicators/run_date=YYYY-MM-DD/</text>
+  <text x="60" y="480" font-size="11.5" fill="#064e3b" font-family="Consolas, Menlo, monospace">&#160;&#160;indicator=NY_GDP_MKTP_CD/data.parquet</text>
+  <text x="60" y="504" font-size="12" fill="#047857" font-style="italic">partition pruning by run_date + indicator</text>
+
+  <path d="M 230 520 L 230 552" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="244" y="540" font-size="11.5" fill="#64748b" font-family="Consolas, Menlo, monospace">COPY INTO</text>
+
+  <!-- Snowflake RAW -->
+  <rect x="40" y="556" width="390" height="66" rx="12" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="60" y="584" font-size="16" font-weight="700" fill="#075985">Snowflake - RAW schema</text>
+  <text x="60" y="606" font-size="12.5" fill="#334155">Landing tables · source freshness tests applied here</text>
+
+  <path d="M 430 589 L 464 589" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="438" y="579" font-size="11.5" fill="#64748b">dbt</text>
+
+  <!-- ============ dbt panel ============ -->
+  <rect x="470" y="104" width="420" height="550" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="680" y="136" font-size="16.5" font-weight="700" fill="#9d174d" text-anchor="middle">dbt - Kimball Star Schema</text>
+
+  <rect x="490" y="152" width="380" height="58" rx="8" fill="#ffffff" stroke="#f9a8d4" filter="url(#softshadow)"/>
+  <text x="506" y="175" font-size="13" font-weight="700" fill="#9d174d">staging - stg_wb_indicators · stg_wb_countries</text>
+  <text x="506" y="195" font-size="12" fill="#334155">rename, cast, null handling (1:1 with source)</text>
+
+  <path d="M 680 210 L 680 230" stroke="#be185d" stroke-width="2" marker-end="url(#arrowPink)"/>
+
+  <rect x="490" y="234" width="380" height="58" rx="8" fill="#ffffff" stroke="#f9a8d4" filter="url(#softshadow)"/>
+  <text x="506" y="257" font-size="13" font-weight="700" fill="#9d174d">intermediate - int_indicators_pivoted</text>
+  <text x="506" y="277" font-size="12" fill="#334155">reshape API output into fact-ready rows</text>
+
+  <path d="M 680 292 L 680 312" stroke="#be185d" stroke-width="2" marker-end="url(#arrowPink)"/>
+
+  <!-- Star schema: dims feed fact -->
+  <rect x="490" y="316" width="180" height="54" rx="8" fill="#ffffff" stroke="#f9a8d4" filter="url(#softshadow)"/>
+  <text x="580" y="338" font-size="13" font-weight="700" fill="#9d174d" text-anchor="middle">dim_country</text>
+  <text x="580" y="357" font-size="11.5" fill="#334155" text-anchor="middle">surrogate key (MD5 macro)</text>
+
+  <rect x="690" y="316" width="180" height="54" rx="8" fill="#ffffff" stroke="#f9a8d4" filter="url(#softshadow)"/>
+  <text x="780" y="338" font-size="13" font-weight="700" fill="#9d174d" text-anchor="middle">dim_indicator</text>
+  <text x="780" y="357" font-size="11.5" fill="#334155" text-anchor="middle">surrogate key (MD5 macro)</text>
+
+  <path d="M 580 370 Q 590 386 628 396" fill="none" stroke="#be185d" stroke-width="2" marker-end="url(#arrowPink)"/>
+  <path d="M 780 370 Q 770 386 732 396" fill="none" stroke="#be185d" stroke-width="2" marker-end="url(#arrowPink)"/>
+
+  <rect x="550" y="398" width="260" height="86" rx="10" fill="#fbcfe8" stroke="#be185d" stroke-width="2" filter="url(#softshadow)"/>
+  <text x="680" y="425" font-size="13.5" font-weight="700" fill="#831843" text-anchor="middle">fct_indicator_values</text>
+  <text x="680" y="447" font-size="11.5" fill="#831843" text-anchor="middle">grain: country × indicator × year</text>
+  <text x="680" y="465" font-size="11.5" fill="#831843" text-anchor="middle">~1M+ rows · incremental (last 2 yrs)</text>
+
+  <path d="M 680 484 L 680 504" stroke="#be185d" stroke-width="2" marker-end="url(#arrowPink)"/>
+
+  <rect x="490" y="508" width="380" height="58" rx="8" fill="#ffffff" stroke="#f9a8d4" filter="url(#softshadow)"/>
+  <text x="506" y="531" font-size="13" font-weight="700" fill="#9d174d">snapshots - scd_dim_country (SCD Type 2)</text>
+  <text x="506" y="551" font-size="12" fill="#334155">tracks income-level reclassifications (e.g., China 2010)</text>
+
+  <rect x="490" y="578" width="380" height="58" rx="8" fill="#fdf2f8" stroke="#ec4899" stroke-dasharray="5 3"/>
+  <text x="506" y="601" font-size="13" font-weight="700" fill="#9d174d">dbt tests - zero failures</text>
+  <text x="506" y="621" font-size="12" fill="#334155">not_null · relationships on all dim keys · source freshness</text>
+
+  <!-- ============ Side notes ============ -->
+  <rect x="910" y="104" width="250" height="550" rx="12" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="930" y="136" font-size="14.5" font-weight="700" fill="#334155">Key design decisions</text>
+
+  <circle cx="936" cy="160" r="2.5" fill="#64748b"/>
+  <text x="948" y="164" font-size="12" fill="#475569">Kimball star schema -</text>
+  <text x="948" y="180" font-size="12" fill="#475569">declared grain, conformed dims</text>
+
+  <circle cx="936" cy="202" r="2.5" fill="#64748b"/>
+  <text x="948" y="206" font-size="12" fill="#475569">SCD2 dim_country - countries</text>
+  <text x="948" y="222" font-size="12" fill="#475569">get reclassified; history kept</text>
+
+  <circle cx="936" cy="244" r="2.5" fill="#64748b"/>
+  <text x="948" y="248" font-size="12" fill="#475569">Incremental: reprocess last</text>
+  <text x="948" y="264" font-size="12" fill="#475569">2 years for WB late corrections</text>
+
+  <circle cx="936" cy="286" r="2.5" fill="#64748b"/>
+  <text x="948" y="290" font-size="12" fill="#475569">Surrogate keys via reusable</text>
+  <text x="948" y="306" font-size="12" fill="#475569">MD5 dbt macro</text>
+
+  <circle cx="936" cy="328" r="2.5" fill="#64748b"/>
+  <text x="948" y="332" font-size="12" fill="#475569">Daily refresh of annual data:</text>
+  <text x="948" y="348" font-size="12" fill="#475569">corrections land year-round</text>
+
+  <text x="930" y="388" font-size="14.5" font-weight="700" fill="#334155">Outcomes</text>
+
+  <circle cx="936" cy="412" r="2.5" fill="#64748b"/>
+  <text x="948" y="416" font-size="12" fill="#475569">~1M+ fact rows, 60+ years,</text>
+  <text x="948" y="432" font-size="12" fill="#475569">200+ countries</text>
+
+  <circle cx="936" cy="454" r="2.5" fill="#64748b"/>
+  <text x="948" y="458" font-size="12" fill="#475569">Zero-failure dbt test suite</text>
+
+  <circle cx="936" cy="480" r="2.5" fill="#64748b"/>
+  <text x="948" y="484" font-size="12" fill="#475569">not_null + relationships on</text>
+  <text x="948" y="500" font-size="12" fill="#475569">all dimension keys</text>
+
+  <circle cx="936" cy="522" r="2.5" fill="#64748b"/>
+  <text x="948" y="526" font-size="12" fill="#475569">Source freshness monitored</text>
+
+  <circle cx="936" cy="548" r="2.5" fill="#64748b"/>
+  <text x="948" y="552" font-size="12" fill="#475569">10+ year backfill supported</text>
+
+  <!-- ============ Airflow band ============ -->
+  <rect x="40" y="682" width="1120" height="92" rx="12" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="64" y="712" font-size="14.5" font-weight="700" fill="#5b21b6">Airflow - wb_indicators_pipeline · daily 06:00 UTC · catchup=True · max_active_runs=1 · retries=3 · on_failure_callback → email alert</text>
+
+  <rect x="64" y="726" width="190" height="36" rx="8" fill="#ffffff" stroke="#8b5cf6" filter="url(#softshadow)"/>
+  <text x="159" y="749" font-size="12.5" fill="#5b21b6" text-anchor="middle">ingest_wb_indicators</text>
+  <path d="M 254 744 L 282 744" stroke="#6d28d9" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <rect x="286" y="726" width="130" height="36" rx="8" fill="#ffffff" stroke="#8b5cf6" filter="url(#softshadow)"/>
+  <text x="351" y="749" font-size="12.5" fill="#5b21b6" text-anchor="middle">dbt_run</text>
+  <path d="M 416 744 L 444 744" stroke="#6d28d9" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <rect x="448" y="726" width="150" height="36" rx="8" fill="#ffffff" stroke="#8b5cf6" filter="url(#softshadow)"/>
+  <text x="523" y="749" font-size="12.5" fill="#5b21b6" text-anchor="middle">dbt_snapshot</text>
+  <path d="M 598 744 L 626 744" stroke="#6d28d9" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <rect x="630" y="726" width="130" height="36" rx="8" fill="#ffffff" stroke="#8b5cf6" filter="url(#softshadow)"/>
+  <text x="695" y="749" font-size="12.5" fill="#5b21b6" text-anchor="middle">dbt_test</text>
+
+  <text x="800" y="749" font-size="12" fill="#6d28d9" font-style="italic">backfill across 10+ years of history verified</text>
+</svg>

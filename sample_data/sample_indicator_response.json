@@ -1,0 +1,42 @@
+[
+  {
+    "page": 1,
+    "pages": 1,
+    "per_page": 1000,
+    "total": 3,
+    "sourceid": "2",
+    "lastupdated": "2024-01-10"
+  },
+  [
+    {
+      "indicator": {"id": "NY.GDP.MKTP.CD", "value": "GDP (current US$)"},
+      "country": {"id": "IN", "value": "India"},
+      "countryiso3code": "IND",
+      "date": "2022",
+      "value": 3385089732685.35,
+      "unit": "",
+      "obs_status": "",
+      "decimal": 0
+    },
+    {
+      "indicator": {"id": "NY.GDP.MKTP.CD", "value": "GDP (current US$)"},
+      "country": {"id": "US", "value": "United States"},
+      "countryiso3code": "USA",
+      "date": "2022",
+      "value": 25462700000000.0,
+      "unit": "",
+      "obs_status": "",
+      "decimal": 0
+    },
+    {
+      "indicator": {"id": "NY.GDP.MKTP.CD", "value": "GDP (current US$)"},
+      "country": {"id": "CN", "value": "China"},
+      "countryiso3code": "CHN",
+      "date": "2022",
+      "value": 17963170000000.0,
+      "unit": "",
+      "obs_status": "",
+      "decimal": 0
+    }
+  ]
+]

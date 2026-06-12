@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: fct_indicator_values
+    description: >
+      Kimball fact table. Grain: country Ã- indicator Ã- year.
+      Values represent annual World Bank development indicators.
+    columns:
+      - name: fact_key
+        tests: [not_null, unique]
+      - name: country_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_country')
+              field: country_key
+      - name: indicator_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_indicator')
+              field: indicator_key
+      - name: year
+        tests: [not_null]
+      - name: country_iso2
+        tests: [not_null]
+      - name: indicator_code
+        tests: [not_null]
+
+  - name: dim_country
+    description: Country dimension with region and income level metadata
+    columns:
+      - name: country_key
+        tests: [not_null, unique]
+      - name: country_iso2
+        tests: [not_null, unique]
+      - name: country_name
+        tests: [not_null]
+
+  - name: dim_indicator
+    description: One row per World Bank indicator code
+    columns:
+      - name: indicator_key
+        tests: [not_null, unique]
+      - name: indicator_code
+        tests: [not_null, unique]

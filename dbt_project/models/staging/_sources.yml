@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: raw
+    database: WB_WAREHOUSE
+    schema: RAW
+    description: Raw World Bank data loaded from S3 Parquet files via COPY INTO
+    freshness:
+      warn_after: {count: 7, period: day}
+      error_after: {count: 30, period: day}
+    loaded_at_field: ingested_at
+
+    tables:
+      - name: raw_wb_indicators
+        description: One row per country per year per indicator
+        columns:
+          - name: indicator_code
+            tests: [not_null]
+          - name: country_iso2
+            tests: [not_null]
+          - name: year
+            tests: [not_null]
+
+      - name: raw_wb_countries
+        description: Country reference data from WB API
+        columns:
+          - name: country_iso2
+            tests: [not_null]
+          - name: country_name
+            tests: [not_null]

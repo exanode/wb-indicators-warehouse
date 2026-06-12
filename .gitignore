@@ -1,0 +1,33 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+env/
+venv/
+.venv/
+
+# secrets
+.env
+
+# data
+data/
+checkpoints/
+*.parquet
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+
+# airflow
+airflow/logs/
+
+# ide
+.vscode/
+.idea/
+
+# os
+.DS_Store
+Thumbs.db
